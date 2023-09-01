@@ -23,4 +23,9 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove=".gitignore" />
+      <None Remove="global.json" />
+    </ItemGroup>
+
 </Project>
