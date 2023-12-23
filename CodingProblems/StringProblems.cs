@@ -158,9 +158,10 @@ public partial class CodingProblems
 
     [Theory]
     [InlineData("A man, a plan, a canal: Panama", true)]
+    [InlineData("A man, a plan, a canal: Panama1", false)]
     public void IsPalindrome(string s, bool result)
     {
-        bool output;
+        bool output = true;
         for (int start = 0, end = s.Length - 1 ; end > start ; )
         {
             if ( !char.IsLetterOrDigit(s[start]) )
@@ -181,7 +182,6 @@ public partial class CodingProblems
                 break;
             }
         }
-        output = true;
         output.Should().Be(result);
     }
 
@@ -222,8 +222,8 @@ public partial class CodingProblems
 // Output: “ap”
 // gen test
     [Theory]
-    [InlineData(new string[] { "geeksforgeeks", "geeks", "geek", "geezer" }, "gee")]
-    [InlineData(new string[] { "apple", "ape", "april" }, "ap")]
+    [InlineData(new[] { "geeksforgeeks", "geeks", "geek", "geezer" }, "gee")]
+    [InlineData(new[] { "apple", "ape", "april" }, "ap")]
     public void LongestCommonPrefix(string[] words, string result)
     {
         string output = "";
@@ -282,10 +282,69 @@ public partial class CodingProblems
         output.Should().Be(result);
     }
 
+    // find duplicates i.e "aabcdde" => "ad"
+    [Theory]
+    [InlineData("aabcdde", "ad")]
+    [InlineData("aabcddeeff", "adef")]
+    public void FindDuplicates(string s, string result)
+    {
+        var output = "";
+        var cache = new HashSet<char>();
+        for (int i = 0; i < s.Length; i++)
+        {
+                var current= s[i];
+                if (cache.Contains(current))
+                {
+                   output += current; 
+                }
+                cache.Add(current);
+        }
+        output.Should().Be(result);
+    }
 
+    // Input: str1 = “listen”  str2 = “silent”
+    // Output: “Anagram”
+    // Explanation: All characters of “listen” and “silent” are the same.
+    //
+    //     Input: str1 = “gram”  str2 = “arm”
+    // Output: “Not Anagram”
+    [Theory]
+    [InlineData("listen", "silent", true)]
+    [InlineData("gram", "arm", false)]
+    [InlineData("api", "app", true)]
+    public void IsAnagram(string s1, string s2, bool result)
+    {
+        var output = true;
+        var cache = new HashSet<char>();
+        if (s1.Length != s2.Length)
+        {
+            output = false;
+        }
+        else
+        {
 
+            for (int i = 0; i < s1.Length; i++)
+            {
+                var current = s1[i];
+                cache.Add(current);
+                
+            }
 
-
+            for (int i = 0; i < s2.Length; i++)
+            {
+                var current = s2[i];
+                if (!cache.Contains(current) )
+                {
+                    output = false;
+                    break;
+                }
+            }
+        }
+        
+        output.Should().Be(result);
+        
+        
+    }
 
 
 
